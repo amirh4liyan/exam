@@ -3,33 +3,32 @@ x = int(input())
 li = [3, 5, 11, 7, 9]
 li.sort()
 
-floor = 0
-ceil = 0
 
 if x in li:
-    ceil = x
-    floor = x
-elif x > li[-1]:
-    ceil = -1
-    floor = [-1]
-elif x < li[0]:
-    ceil = li[0]
-    floor = -1
+    ceil = floor = x
 else:
     L = 0
     R = len(li)-1
-    capture = []
     while (L <= R):
-        mid = int((L + R)/2)
+        mid = (L + R)//2
         item = li[mid]
-        if x > item:
+        if x >= item:
             L = mid+1
-            ceil = li[L]
-            floor = item
         elif x < item:
-            ceil = item
-            floor = li[R]
             R = mid-1
+
+    if item - x < 0:
+        if mid+1 > len(li)-1:
+            ceil = -1
+        else:
+            ceil = li[mid+1]
+        floor = li[mid]
+    elif item - x > 0:
+        ceil = li[mid]
+        if mid-1 < 0:
+            floor = -1
+        else:
+            floor = li[mid-1]
 
 print("ceil: ", ceil)            
 print("floor: ", floor)
